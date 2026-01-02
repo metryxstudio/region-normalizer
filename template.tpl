@@ -15,7 +15,8 @@ ___INFO___
   "displayName": "Region Normalizer",
   "description": "Normalizes region/state names for server-side tracking by removing spaces and punctuation while preserving UTF-8 characters. Includes Croatian county mapping.",
   "containerContexts": [
-    "SERVER"
+    "SERVER",
+    "WEB"
   ],
   "categories": ["UTILITY"],
   "brand": {
@@ -105,6 +106,83 @@ var normalizeRegion = function(data) {
 };
 
 return normalizeRegion(data);
+
+
+___SANDBOXED_JS_FOR_WEB_TEMPLATE___
+
+var makeString = require('makeString');
+
+var normalizeRegion = function(data) {
+  var rawRegion = data.rawRegion;
+
+  if (!rawRegion) {
+    return undefined;
+  }
+
+  var regionString = makeString(rawRegion).trim().toLowerCase();
+  
+  if (regionString.length === 0) {
+    return undefined;
+  }
+  
+  var croatianCounties = {
+    'zagrebačka županija': 'zagrebačka',
+    'krapinsko-zagorska županija': 'krapinsko-zagorska',
+    'sisačko-moslavačka županija': 'sisačko-moslavačka',
+    'karlovačka županija': 'karlovačka',
+    'varaždinska županija': 'varaždinska',
+    'koprivničko-križevačka županija': 'koprivničko-križevačka',
+    'bjelovarsko-bilogorska županija': 'bjelovarsko-bilogorska',
+    'primorsko-goranska županija': 'primorsko-goranska',
+    'ličko-senjska županija': 'ličko-senjska',
+    'virovitičko-podravska županija': 'virovitičko-podravska',
+    'požeško-slavonska županija': 'požeško-slavonska',
+    'brodsko-posavska županija': 'brodsko-posavska',
+    'zadarska županija': 'zadarska',
+    'osječko-baranjska županija': 'osječko-baranjska',
+    'šibensko-kninska županija': 'šibensko-kninska',
+    'vukovarsko-srijemska županija': 'vukovarsko-srijemska',
+    'splitsko-dalmatinska županija': 'splitsko-dalmatinska',
+    'istarska županija': 'istarska',
+    'dubrovačko-neretvanska županija': 'dubrovačko-neretvanska',
+    'međimurska županija': 'međimurska',
+    'grad zagreb': 'zagreb'
+  };
+  
+  if (croatianCounties[regionString]) {
+    return croatianCounties[regionString];
+  }
+  
+  var zupaIndex = regionString.indexOf(' županija');
+  if (zupaIndex !== -1) {
+    regionString = regionString.substring(0, zupaIndex);
+  }
+  
+  var charsToRemove = ' \'"-.,;:!?()[]{}/@#$%^&*+=_|\\<>~`0123456789';
+  var normalizedRegion = '';
+  
+  for (var i = 0; i < regionString.length; i++) {
+    var char = regionString.charAt(i);
+    
+    if (charsToRemove.indexOf(char) === -1) {
+      normalizedRegion = normalizedRegion + char;
+    }
+  }
+  
+  if (normalizedRegion.length === 0) {
+    return undefined;
+  }
+  
+  return normalizedRegion;
+};
+
+return normalizeRegion(data);
+
+
+
+___WEB_PERMISSIONS___
+
+[]
 
 
 ___SERVER_PERMISSIONS___

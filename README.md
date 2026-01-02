@@ -1,6 +1,6 @@
 # Region Normalizer
 
-A server-side Google Tag Manager variable template that normalizes region/state names for server-side tracking by removing spaces and punctuation while preserving UTF-8 characters. Includes Croatian county mapping.
+A Google Tag Manager variable template for both web and server containers that normalizes region/state names for server-side tracking by removing spaces and punctuation while preserving UTF-8 characters. Includes Croatian county mapping.
 
 ## Overview
 
@@ -8,7 +8,7 @@ This template prepares region/state names for hashing and sending to advertising
 
 ## Installation
 
-1. In your server-side GTM container, go to **Templates** → **Variable Templates** → **Search Gallery**
+1. In your GTM container (web or server-side), go to **Templates** → **Variable Templates** → **Search Gallery**
 2. Search for "Region Normalizer"
 3. Click **Add to workspace**
 
@@ -61,6 +61,12 @@ All 20 Croatian counties + City of Zagreb are supported:
 1. Create a variable using this template
 2. Set **Raw Region/State** to your region data source (e.g., `{{Event Data - state}}`)
 3. Use the normalized output in your tracking tags or hash it for CAPI
+
+## Compatibility
+
+This template works in both:
+- **Web GTM** containers
+- **Server-side GTM** containers
 
 ## Author
 
