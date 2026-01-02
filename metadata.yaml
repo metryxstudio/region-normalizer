@@ -1,5 +1,5 @@
 homepage: "https://github.com/metryxstudio/region-normalizer"
 documentation: "https://github.com/metryxstudio/region-normalizer#readme"
 versions:
-  - sha: # Add your commit SHA after pushing to GitHub
+  - sha: efc22c4fa50548a9e5acc52178a10e2aec81fa64
     changeNotes: "Initial release"
